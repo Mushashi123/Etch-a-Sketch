@@ -11,8 +11,41 @@
       <div class="container">
         <div class="canvas"></div>
         <div class="toolbar">
-          <div class="tools"></div>
-          <div class="status"></div>
+          <div class="tools">
+            <button type="button" class="tools__item btn btn--active">
+              Eraser
+            </button>
+
+            <button type="button" class="tools__item btn">
+              Randomize Color
+            </button>
+
+            <button type="button" class="tools__item btn">Darken Effect</button>
+
+            <button type="button" class="tools__item btn" id="color-picker">
+              <span id="picked-color"></span> Pick Color
+            </button>
+
+            <button type="button" class="tools__item btn">Resize</button>
+
+            <button type="button" class="tools__item btn">Reset</button>
+          </div>
+          <div class="status">
+            <div class="status__info">
+              <span class="status__property status__current"
+                >Current Grid Size</span
+              >:
+              <span class="status__value">16 &Cross; 16</span>
+            </div>
+            <div class="status__info">
+              <span class="status__property">Max Grid Size</span>:
+              <span class="status__value">100 &Cross; 100</span>
+            </div>
+            <div class="status__info">
+              <span class="status__property">MIN Grid Size</span>:
+              <span class="status__value">1 &Cross; 1</span>
+            </div>
+          </div>
         </div>
       </div>
     </main>
