@@ -1,7 +1,16 @@
+const MIN_GRID_SIZE = 1;
+const MAX_GRID_SIZE = 100;
 const canvas = document.querySelector(".canvas");
 const statusCurrent = document.querySelector(".status__current");
+const resizeBtn = document.querySelector("#resize");
 
-function createGrid(size = 16, pen) {
+function createGrid(size = 16) {
+  //before creating grid make sure canvas is empty
+  while (canvas.firstChild) {
+    canvas.removeChild(canvas.firstChild);
+  }
+
+  //create size  * size number of square pixels
   for (let i = 0; i < size * size; i++) {
     const pixel = document.createElement("div");
     pixel.classList.add("pixel");
@@ -14,9 +23,6 @@ function createGrid(size = 16, pen) {
   statusCurrent.querySelector(
     ".status__value"
   ).innerHTML = `${size} &Cross; ${size}`;
-
-  //and initialize pen
-  pen();
 }
 
 function pen() {
@@ -48,4 +54,22 @@ function pen() {
   });
 }
 
-createGrid(undefined, pen);
+resizeBtn.addEventListener("click", (e) => {
+  let size = prompt("Enter new grid size: ");
+  // if number is NaN, or nullish dont do anything
+  if (isNaN(size) || !size) {
+    return;
+  }
+
+  // if number is out of range return
+  if (size < MIN_GRID_SIZE || size > MAX_GRID_SIZE) {
+    alert(`Grid size ${size} out of range`);
+    return;
+  }
+
+  //create new grid with new size
+  createGrid(size);
+});
+
+createGrid(undefined);
+pen();
