@@ -24,6 +24,9 @@ function pen() {
   let mouseDown = false;
   canvas.addEventListener("mousedown", (e) => {
     mouseDown = true;
+    //if mouse down happens in one of the pixel, the pixel must change color too
+    if (e.target.nodeType === Node.ELEMENT_NODE)
+      e.target.style.backgroundColor = "#000";
   });
 
   // if mouse if up it wont work
@@ -31,13 +34,14 @@ function pen() {
     mouseDown = false;
   });
 
-  // hover happens when moves inters an element or leaves
-  canvas.addEventListener("mouseover", (e) => {
-    if (mouseDown && e.target.nodeType === Node.ELEMENT_NODE) {
-      e.target.style.backgroundColor = "#000";
-    }
+  //if the mouse leaves the canvas while mouse down, it should be considered mouse out, so that when mouse returns to the canvas, user must press mouse down again to use pen
+  // mouseleave doesn't bubble and descendent element doesnt fire the event , hence we can detect if mouse is out of canvas itself or it's descendant
+  canvas.addEventListener("mouseleave", (e) => {
+    mouseDown = false;
   });
-  canvas.addEventListener("mouseout", (e) => {
+
+  // pen works only if mouse is down and is over a pixel
+  canvas.addEventListener("mouseover", (e) => {
     if (mouseDown && e.target.nodeType === Node.ELEMENT_NODE) {
       e.target.style.backgroundColor = "#000";
     }
