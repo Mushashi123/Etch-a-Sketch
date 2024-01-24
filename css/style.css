@@ -34,10 +34,11 @@ main {
   background-color: #fff;
   display: flex;
   flex-wrap: wrap;
+  align-content: flex-start;
 }
 
 .pixel {
-  flex: 0 1 auto;
+  flex: 1 1 auto;
 }
 
 .toolbar {
