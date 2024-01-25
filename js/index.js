@@ -10,7 +10,7 @@ const eraserBtn = document.querySelector("#eraser");
 const colorPickerBtn = document.querySelector("#color-picker");
 const pickedColor = document.querySelector("#picked-color");
 const randomizeColorBtn = document.querySelector("#randomize-color");
-
+const resetBtn = document.querySelector("#reset-btn");
 //pen works only if mouse is down
 let penMode = MODE_PEN;
 let mouseDown = false;
@@ -120,6 +120,18 @@ pickedColor.addEventListener("change", (e) => {
   //change the current selected color's value
   colorPickerBtn.querySelector("#picked-color__sample").style.backgroundColor =
     pickedColorValue;
+});
+
+resetBtn.addEventListener("click", (e) => {
+  // get the first child of canvas
+  const firstPixel = canvas.firstChild;
+
+  // itterate the until the next sibbling elementh is null and erase color
+  let currentPixel = firstPixel;
+  while (currentPixel) {
+    currentPixel.style.backgroundColor = "transparent";
+    currentPixel = currentPixel.nextElementSibling;
+  }
 });
 
 // initial grid default 16 * 16
