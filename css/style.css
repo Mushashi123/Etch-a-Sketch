@@ -56,12 +56,12 @@ main {
   padding: 28px 24px;
 }
 
-#color-picker {
+#pick-color {
   position: relative;
 }
 
-/* the input:coloe element will cover the color picker button but is transparent so when user clicks color picker, the input: color is the once that get's clicked  */
-#picked-color {
+/* the <input:color> element will cover the #pick-color button,while being transparent so when user clicks #pick-color btn, user feels like they're clicking #pick-color btn but they are actually clicking transparent <input:color> element */
+#color-picker {
   display: block;
   height: 100%;
   width: 100%;
@@ -72,7 +72,7 @@ main {
   left: 0;
 }
 
-#picked-color__sample {
+#picked-color {
   display: inline-block;
   height: 10px;
   width: 10px;

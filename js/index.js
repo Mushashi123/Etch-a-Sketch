@@ -7,8 +7,8 @@ const canvas = document.querySelector(".canvas");
 const statusCurrent = document.querySelector(".status__current");
 const resizeBtn = document.querySelector("#resize");
 const eraserBtn = document.querySelector("#eraser");
-const colorPickerBtn = document.querySelector("#color-picker");
-const pickedColor = document.querySelector("#picked-color");
+const pickColorBtn = document.querySelector("#pick-color");
+const colorPicker = document.querySelector("#color-picker");
 const randomizeColorBtn = document.querySelector("#randomize-color");
 const resetBtn = document.querySelector("#reset-btn");
 //pen works only if mouse is down
@@ -113,13 +113,13 @@ randomizeColorBtn.addEventListener("click", (e) => {
 });
 
 //change event occours if user changes color  in the color picker and dismisses the color  picker
-pickedColor.addEventListener("change", (e) => {
-  let pickedColorValue = e.target.value;
-  penColor = pickedColorValue;
+colorPicker.addEventListener("change", (e) => {
+  let colorPicked = e.target.value;
+  penColor = colorPicked;
 
-  //change the current selected color's value
-  colorPickerBtn.querySelector("#picked-color__sample").style.backgroundColor =
-    pickedColorValue;
+  //change the current selected color's value in UI (#picked-color) element
+  pickColorBtn.querySelector("#picked-color").style.backgroundColor =
+    colorPicked;
 });
 
 resetBtn.addEventListener("click", (e) => {
