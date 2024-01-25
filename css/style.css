@@ -81,7 +81,7 @@ main {
 }
 
 .status {
-  padding: 17px 24px 0 24px;
+  padding: 17px 24px 0 24px; /*bottom padding is 0 so that status wont overflow its parent from bottom*/
   flex: 1 1 auto;
 }
 
@@ -108,7 +108,7 @@ main {
 
 .btn--active,
 .btn--active:hover {
-  /* active button wont have a hover effect  */
+  /* active button wont have a hover effect, no changes*/
   background-color: #0e8388;
   color: #fff;
 }
