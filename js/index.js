@@ -2,12 +2,14 @@ const MIN_GRID_SIZE = 1;
 const MAX_GRID_SIZE = 100;
 const MODE_PEN = "pen";
 const MODE_ERASER = "eraser";
+const MODE_RANDOMIZE = "randomize";
 const canvas = document.querySelector(".canvas");
 const statusCurrent = document.querySelector(".status__current");
 const resizeBtn = document.querySelector("#resize");
 const eraserBtn = document.querySelector("#eraser");
 const colorPickerBtn = document.querySelector("#color-picker");
 const pickedColor = document.querySelector("#picked-color");
+const randomizeColorBtn = document.querySelector("#randomize-color");
 
 //pen works only if mouse is down
 let penMode = MODE_PEN;
@@ -25,6 +27,8 @@ canvas.addEventListener("mousedown", (e) => {
   // if pen mode is eraser, it erases the color
   else if (penMode === MODE_ERASER) {
     e.target.style.backgroundColor = "transparent";
+  } else if (penMode === MODE_RANDOMIZE) {
+    e.target.style.backgroundColor = randomColor();
   }
 });
 
@@ -55,6 +59,8 @@ canvas.addEventListener("mouseover", (e) => {
     e.target.style.backgroundColor = penColor;
   } else if (penMode === MODE_ERASER) {
     e.target.style.backgroundColor = "transparent";
+  } else if (penMode === MODE_RANDOMIZE) {
+    e.target.style.backgroundColor = randomColor();
   }
 });
 
@@ -78,13 +84,32 @@ resizeBtn.addEventListener("click", (e) => {
 
 //eraser feature, toogles erasery
 eraserBtn.addEventListener("click", (e) => {
-  if (penMode === MODE_PEN) {
-    eraserBtn.classList.add("btn--active");
-    penMode = MODE_ERASER;
-  } else if (penMode === MODE_ERASER) {
+  if (penMode === MODE_ERASER) {
     eraserBtn.classList.remove("btn--active");
     penMode = MODE_PEN;
+    return;
   }
+
+  eraserBtn.classList.add("btn--active");
+  penMode = MODE_ERASER;
+
+  // remove other modes
+  randomizeColorBtn.classList.remove("btn--active");
+});
+
+//randomize color feature, random pixels
+randomizeColorBtn.addEventListener("click", (e) => {
+  if (penMode === MODE_RANDOMIZE) {
+    randomizeColorBtn.classList.remove("btn--active");
+    penMode = MODE_PEN;
+    return;
+  }
+
+  randomizeColorBtn.classList.add("btn--active");
+  penMode = MODE_RANDOMIZE;
+
+  //remove other mode
+  eraserBtn.classList.remove("btn--active");
 });
 
 //change event occours if user changes color  in the color picker and dismisses the color  picker
@@ -119,4 +144,9 @@ function createGrid(size = 16) {
   statusCurrent.querySelector(
     ".status__value"
   ).innerHTML = `${size} &Cross; ${size}`;
+}
+
+function randomColor() {
+  let randomColor = Math.trunc(Math.random() * 1234567890);
+  return `#${randomColor.toString(16).substring(0, 6)}`;
 }
