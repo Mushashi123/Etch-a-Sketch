@@ -56,12 +56,28 @@ main {
   padding: 28px 24px;
 }
 
+#color-picker {
+  position: relative;
+}
+
+/* the input:coloe element will cover the color picker button but is transparent so when user clicks color picker, the input: color is the once that get's clicked  */
 #picked-color {
+  display: block;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+}
+
+#picked-color__sample {
   display: inline-block;
   height: 10px;
   width: 10px;
+  margin-right: 5px;
   background-color: black;
-  margin-right: 3px;
 }
 
 .status {

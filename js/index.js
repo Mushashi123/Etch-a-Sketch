@@ -6,10 +6,13 @@ const canvas = document.querySelector(".canvas");
 const statusCurrent = document.querySelector(".status__current");
 const resizeBtn = document.querySelector("#resize");
 const eraserBtn = document.querySelector("#eraser");
+const colorPickerBtn = document.querySelector("#color-picker");
+const pickedColor = document.querySelector("#picked-color");
 
 //pen works only if mouse is down
 let penMode = MODE_PEN;
 let mouseDown = false;
+let penColor = "#000000";
 
 canvas.addEventListener("mousedown", (e) => {
   mouseDown = true;
@@ -18,7 +21,7 @@ canvas.addEventListener("mousedown", (e) => {
     return;
   }
   //if mouse down happens in one of the pixel, the pixel must change color too
-  if (penMode === MODE_PEN) e.target.style.backgroundColor = "#000";
+  if (penMode === MODE_PEN) e.target.style.backgroundColor = penColor;
   // if pen mode is eraser, it erases the color
   else if (penMode === MODE_ERASER) {
     e.target.style.backgroundColor = "transparent";
@@ -49,7 +52,7 @@ canvas.addEventListener("mouseover", (e) => {
   }
 
   if (penMode === MODE_PEN) {
-    e.target.style.backgroundColor = "#000";
+    e.target.style.backgroundColor = penColor;
   } else if (penMode === MODE_ERASER) {
     e.target.style.backgroundColor = "transparent";
   }
@@ -82,6 +85,16 @@ eraserBtn.addEventListener("click", (e) => {
     eraserBtn.classList.remove("btn--active");
     penMode = MODE_PEN;
   }
+});
+
+//change event occours if user changes color  in the color picker and dismisses the color  picker
+pickedColor.addEventListener("change", (e) => {
+  let pickedColorValue = e.target.value;
+  penColor = pickedColorValue;
+
+  //change the current selected color's value
+  colorPickerBtn.querySelector("#picked-color__sample").style.backgroundColor =
+    pickedColorValue;
 });
 
 // initial grid default 16 * 16
