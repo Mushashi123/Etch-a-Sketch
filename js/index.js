@@ -10,7 +10,7 @@ const eraserBtn = document.querySelector("#eraser");
 const pickColorBtn = document.querySelector("#pick-color");
 const colorPicker = document.querySelector("#color-picker");
 const randomizeColorBtn = document.querySelector("#randomize-color");
-const resetBtn = document.querySelector("#reset-btn");
+const resetBtn = document.querySelector("#reset");
 //pen works only if mouse is down
 let penMode = MODE_PEN;
 let mouseDown = false;
