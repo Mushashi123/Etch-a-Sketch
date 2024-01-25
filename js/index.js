@@ -4,7 +4,7 @@ const MODE_PEN = "pen";
 const MODE_ERASER = "eraser";
 const MODE_RANDOMIZE = "randomize";
 const canvas = document.querySelector(".canvas");
-const statusCurrent = document.querySelector(".status__current");
+const currentStatus = document.querySelector(".status__current");
 const resizeBtn = document.querySelector("#resize");
 const eraserBtn = document.querySelector("#eraser");
 const pickColorBtn = document.querySelector("#pick-color");
@@ -66,20 +66,20 @@ canvas.addEventListener("mouseover", (e) => {
 
 //resize feature
 resizeBtn.addEventListener("click", (e) => {
-  let size = prompt("Enter new grid size: ");
+  let newGridSize = prompt("Enter new grid size: ");
   // if number is NaN, or nullish dont do anything
-  if (isNaN(size) || !size) {
+  if (isNaN(newGridSize) || !newGridSize) {
     return;
   }
 
   // if number is out of range return
-  if (size < MIN_GRID_SIZE || size > MAX_GRID_SIZE) {
-    alert(`Grid size ${size} out of range`);
+  if (newGridSize < MIN_GRID_SIZE || newGridSize > MAX_GRID_SIZE) {
+    alert(`Grid size ${newGridSize} out of range`);
     return;
   }
 
   //create new grid with new size
-  createGrid(size);
+  createGrid(newGridSize);
 });
 
 //eraser feature, toogles erasery
@@ -153,7 +153,8 @@ function createGrid(size = 16) {
   }
 
   //once grid is created , update the UI with the current size of the grid
-  statusCurrent.querySelector(
+  //innerHTML is used instead of textContent cause, we want entity code to be parsed as HTML
+  currentStatus.querySelector(
     ".status__value"
   ).innerHTML = `${size} &Cross; ${size}`;
 }
