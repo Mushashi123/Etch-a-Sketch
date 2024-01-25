@@ -65,7 +65,7 @@ main {
 }
 
 .status {
-  padding: 17px 24px;
+  padding: 17px 24px 0 24px;
   flex: 1 1 auto;
 }
 
