@@ -4,6 +4,7 @@ const MAX_GRID_SIZE = 100;
 const MODE_PEN = "pen";
 const MODE_ERASER = "eraser";
 const MODE_RANDOMIZE = "randomize";
+const COLORED_PIXEL = "colored";
 
 // || DOM element selection for DOM manipulation
 const canvas = document.querySelector(".canvas");
@@ -63,11 +64,20 @@ function mouseIsDown(e) {
   }
 
   //if mouse down happens in one of the pixel, the pixel must get effected based on pen's mode
-  if (penMode === MODE_PEN) e.target.style.backgroundColor = penColor;
-  else if (penMode === MODE_ERASER)
+  // if pixel is already colored , it wont be colored
+  if (e.target.dataset.pixelColored !== COLORED_PIXEL && penMode === MODE_PEN) {
+    e.target.style.backgroundColor = penColor;
+    e.target.dataset.pixelColored = COLORED_PIXEL;
+  } else if (penMode === MODE_ERASER) {
     e.target.style.backgroundColor = "transparent";
-  else if (penMode === MODE_RANDOMIZE)
+    e.target.dataset.pixelColored = null;
+  } else if (
+    e.target.dataset.pixelColored !== COLORED_PIXEL &&
+    penMode === MODE_RANDOMIZE
+  ) {
     e.target.style.backgroundColor = randomColor();
+    e.target.dataset.pixelColored = COLORED_PIXEL;
+  }
 }
 
 function mouseReleased(e) {
@@ -86,11 +96,20 @@ function pen(e) {
   }
 
   //based upon pen mode, alter the pixels
-  if (penMode === MODE_PEN) e.target.style.backgroundColor = penColor;
-  else if (penMode === MODE_ERASER)
+  // if pixel is colored it wont be colored
+  if (e.target.dataset.pixelColored !== COLORED_PIXEL && penMode === MODE_PEN) {
+    e.target.style.backgroundColor = penColor;
+    e.target.dataset.pixelColored = COLORED_PIXEL;
+  } else if (penMode === MODE_ERASER) {
     e.target.style.backgroundColor = "transparent";
-  else if (penMode === MODE_RANDOMIZE)
+    e.target.dataset.pixelColored = null;
+  } else if (
+    e.target.dataset.pixelColored !== COLORED_PIXEL &&
+    penMode === MODE_RANDOMIZE
+  ) {
     e.target.style.backgroundColor = randomColor();
+    e.target.dataset.pixelColored = COLORED_PIXEL;
+  }
 }
 
 function eraser(e) {
