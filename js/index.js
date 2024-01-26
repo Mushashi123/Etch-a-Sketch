@@ -4,6 +4,7 @@ const MAX_GRID_SIZE = 100;
 const MODE_PEN = "pen";
 const MODE_ERASER = "eraser";
 const MODE_RANDOMIZE = "randomize";
+const MODE_DARKEN = "darken";
 const COLORED_PIXEL = "colored";
 
 // || DOM element selection for DOM manipulation
@@ -15,6 +16,7 @@ const pickColorBtn = document.querySelector("#pick-color");
 const colorPicker = document.querySelector("#color-picker");
 const randomizeColorBtn = document.querySelector("#randomize-color");
 const resetBtn = document.querySelector("#reset");
+const darkenEffectBtn = document.querySelector("#darken-effect");
 
 // || Main logic
 
@@ -43,6 +45,22 @@ eraserBtn.addEventListener("click", eraser);
 
 //randomize color feature, random pixels
 randomizeColorBtn.addEventListener("click", randomizeColor);
+
+darkenEffectBtn.addEventListener("click", (e) => {
+  if (penMode === MODE_DARKEN) {
+    darkenEffectBtn.classList.remove("btn--active");
+    penMode = MODE_PEN;
+    return;
+  }
+  //change the pen mode to darken
+  penMode = MODE_DARKEN;
+
+  darkenEffectBtn.classList.add("btn--active");
+
+  //remove other active buttons
+  eraserBtn.classList.remove("btn--active");
+  randomizeColorBtn.classList.remove("btn--active");
+});
 
 //change event occours if user changes color  in the color picker and dismisses the color  picker
 colorPicker.addEventListener("change", changePenColor);
@@ -77,6 +95,35 @@ function mouseIsDown(e) {
   ) {
     e.target.style.backgroundColor = randomColor();
     e.target.dataset.pixelColored = COLORED_PIXEL;
+  } else if (
+    e.target.dataset.pixelColored === COLORED_PIXEL &&
+    penMode === MODE_DARKEN
+  ) {
+    // if first time darken effect, dont reduce it's brighntness
+    if (!e.target.style.filter) {
+      e.target.style.filter = `brightness(1)`;
+      return;
+    }
+
+    //after second time
+    //extract darknes value
+    let currentDarkness = e.target.style.filter.substring(
+      e.target.style.filter.indexOf("(") + 1,
+      e.target.style.filter.indexOf(")")
+    );
+
+    //turn it to number type
+    currentDarkness = +currentDarkness;
+
+    // if current darkness is 0 i.e black dont reduce
+    if (!currentDarkness) {
+      return;
+    }
+
+    //from second time start deducingit by 0.1
+    currentDarkness -= 0.1;
+
+    e.target.style.filter = `brightness(${currentDarkness})`;
   }
 }
 
@@ -109,6 +156,35 @@ function pen(e) {
   ) {
     e.target.style.backgroundColor = randomColor();
     e.target.dataset.pixelColored = COLORED_PIXEL;
+  } else if (
+    e.target.dataset.pixelColored === COLORED_PIXEL &&
+    penMode === MODE_DARKEN
+  ) {
+    // if first time darken effect, dont reduce it's brighntness
+    if (!e.target.style.filter) {
+      e.target.style.filter = `brightness(1)`;
+      return;
+    }
+
+    //after second time
+    //extract darknes value
+    let currentDarkness = e.target.style.filter.substring(
+      e.target.style.filter.indexOf("(") + 1,
+      e.target.style.filter.indexOf(")")
+    );
+
+    //turn it to number type
+    currentDarkness = +currentDarkness;
+
+    // if current darkness is 0 i.e black dont reduce
+    if (!currentDarkness) {
+      return;
+    }
+
+    //from second time start deducingit by 0.1
+    currentDarkness -= 0.1;
+
+    e.target.style.filter = `brightness(${currentDarkness})`;
   }
 }
 
@@ -124,6 +200,7 @@ function eraser(e) {
 
   // remove other active buttons
   randomizeColorBtn.classList.remove("btn--active");
+  darkenEffectBtn.classList.remove("btn--active");
 }
 
 function randomizeColor(e) {
@@ -138,6 +215,7 @@ function randomizeColor(e) {
 
   //remove other active buttons
   eraserBtn.classList.remove("btn--active");
+  darkenEffectBtn.classList.remove("btn--active");
 }
 
 function changePenColor(e) {
@@ -151,6 +229,7 @@ function changePenColor(e) {
   //when user changes color, it means user wants to use pen , so remove any active modes and change mode to pen
   eraserBtn.classList.remove("btn--active");
   randomizeColorBtn.classList.remove("btn--active");
+  darkenEffectBtn.classList.remove("btn--active");
   penMode = MODE_PEN;
 }
 
